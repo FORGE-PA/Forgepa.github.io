@@ -1,42 +1,67 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>FORGE PA</title>
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<div class="container">
-  <h1>FORGE PA</h1>
+<!-- Header -->
+<header class="header">
+  <div class="logo">FORGE PA</div>
+  <nav>
+    <a href="#chat-section">Assistant</a>
+    <a href="#tasks-section">Tasks</a>
+    <a href="#games-section">Games</a>
+  </nav>
+</header>
 
-  <div id="chat"></div>
+<!-- Main Content -->
+<main>
+  <!-- Chat Section -->
+  <section id="chat-section" class="section">
+    <h2>Personal Assistant</h2>
+    <div class="container">
+      <div id="chat"></div>
+      <div class="controls">
+        <input id="input" placeholder="Command or question">
+        <button onclick="send()">Send</button>
+        <button onclick="voice()">🎤</button>
+        <button onclick="speak()">🔊</button>
+      </div>
+    </div>
+  </section>
 
-  <div class="controls">
-    <input id="input" placeholder="Command or question">
-    <button onclick="send()">Send</button>
-    <button onclick="voice()">🎤</button>
-    <button onclick="speak()">🔊</button>
-  </div>
+  <!-- Tasks Section -->
+  <section id="tasks-section" class="section">
+    <h2>Tasks & Planning</h2>
+    <div class="container">
+      <ul id="tasks"></ul>
+    </div>
+  </section>
 
-  <h3>Tasks</h3>
-  <ul id="tasks"></ul>
+  <!-- Games Section -->
+  <section id="games-section" class="section">
+    <h2>Kill Time</h2>
+    <div class="container">
+      <div class="games">
+        <button onclick="startGame('snake')">Snake</button>
+        <button onclick="startGame('reaction')">Reaction</button>
+        <button onclick="startGame('shooter')">Mini Shooter</button>
+      </div>
+      <canvas id="canvas" width="320" height="320"></canvas>
+    </div>
+  </section>
+</main>
 
-  <h3>Kill Time</h3>
-  <div class="games">
-    <button onclick="startGame('snake')">Snake</button>
-    <button onclick="startGame('reaction')">Reaction</button>
-    <button onclick="startGame('shooter')">Mini Shooter</button>
-  </div>
-
-  <canvas id="canvas" width="320" height="320"></canvas>
-
-  <footer>
-    © 2026 Eniayekan Promise. All rights reserved.
-  </footer>
-</div>
+<!-- Footer -->
+<footer>
+  © 2026 Eniayekan Promise. All rights reserved.
+</footer>
 
 <script src="script.js"></script>
 </body>
-    </html>
+</html>
