@@ -1,11 +1,90 @@
-/* General Body */
+/* General Reset */
+* {margin:0; padding:0; box-sizing:border-box;}
 body {
+  font-family: 'Arial', sans-serif;
   background:#0b0b0b;
   color:#fff;
-  font-family:Arial, sans-serif;
+  line-height:1.6;
   overflow-x:hidden;
-  position:relative;
 }
+
+/* Header */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 30px;
+  background:#111;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 10px rgba(0,255,153,0.3);
+}
+.header .logo {
+  font-size:1.8rem;
+  font-weight:bold;
+  color:#00ff99;
+}
+.header nav a {
+  color:#fff;
+  margin-left:20px;
+  text-decoration:none;
+  font-weight:500;
+  transition:0.3s;
+}
+.header nav a:hover {color:#00ff99;}
+
+/* Section Styling */
+.section {
+  padding:50px 20px;
+}
+.section h2 {
+  text-align:center;
+  font-size:2rem;
+  margin-bottom:20px;
+  color:#00ff99;
+}
+
+/* Container */
+.container {
+  max-width:520px;
+  margin:0 auto;
+  background: rgba(21,21,21,0.95);
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 0 40px #00ff99;
+  animation: fadeIn 1s ease;
+}
+
+/* Chat Box */
+#chat {height:220px; overflow:auto; border:1px solid #333; padding:8px; margin-bottom:10px;}
+.msg {opacity:0; transform: translateX(-20px); animation: slideIn 0.4s forwards; padding:3px 0;}
+.msg.user {color:#4da6ff; text-align:right; transform: translateX(20px);}
+.msg.bot {color:#00ff99;}
+@keyframes slideIn {to {opacity:1; transform: translateX(0);}}
+
+.controls {display:flex; gap:5px;}
+input {flex:1; padding:10px; border-radius:8px; border:none; background:#222; color:#fff;}
+button {
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#00ff99;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+button:hover {transform: scale(1.1); box-shadow:0 0 20px #00ff99;}
+
+/* Tasks */
+#tasks li {opacity:0; transform: translateX(-20px); animation: taskSlide 0.4s forwards; margin:5px 0;}
+@keyframes taskSlide {to {opacity:1; transform: translateX(0);}}
+
+/* Games Canvas */
+canvas {background:#000; margin-top:10px; border-radius:10px; border:1px solid #333; animation: fadeIn 0.5s;}
+@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+/* Footer */
+footer {text-align:center; margin:40px 0 20px; font-size:12px; color:#888;}
 
 /* Particle Background */
 body::before {
@@ -17,100 +96,4 @@ body::before {
   background-size:20px 20px;
   animation: moveBg 60s linear infinite;
 }
-
-@keyframes moveBg {
-  0% { background-position: 0 0; }
-  100% { background-position: 1000px 1000px; }
-}
-
-/* Container */
-.container {
-  max-width:520px;
-  margin:20px auto;
-  background: rgba(21,21,21,0.95);
-  padding:20px;
-  border-radius:15px;
-  box-shadow: 0 0 40px #00ff99;
-  animation: fadeIn 1s ease;
-}
-
-/* Chat Box */
-#chat {
-  height:220px;
-  overflow:auto;
-  border:1px solid #333;
-  padding:8px;
-  margin-bottom:10px;
-}
-
-/* Messages */
-.msg {
-  opacity:0;
-  transform: translateX(-20px);
-  animation: slideIn 0.4s forwards;
-  padding:3px 0;
-}
-
-.msg.user { color:#4da6ff; text-align:right; transform: translateX(20px); }
-.msg.bot { color:#00ff99; }
-
-@keyframes slideIn {
-  to { opacity:1; transform: translateX(0); }
-}
-
-/* Controls */
-.controls {
-  display:flex;
-  gap:5px;
-}
-
-input {
-  flex:1; padding:10px; border-radius:8px; border:none; background:#222; color:#fff;
-}
-button {
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#00ff99;
-  cursor:pointer;
-  transition: all 0.3s;
-}
-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px #00ff99;
-}
-
-/* Tasks */
-#tasks li {
-  opacity:0;
-  transform: translateX(-20px);
-  animation: taskSlide 0.4s forwards;
-  margin:5px 0;
-}
-
-@keyframes taskSlide {
-  to { opacity:1; transform: translateX(0);}
-}
-
-/* Canvas */
-canvas {
-  background:#000;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #333;
-  animation: fadeIn 0.5s;
-}
-
-/* Fade animation */
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
-}
-
-/* Footer */
-footer {
-  text-align:center;
-  margin-top:20px;
-  font-size:12px;
-  color:#888;
-}
+@keyframes moveBg {0% {background-position:0 0;} 100% {background-position:1000px 1000px;}}
