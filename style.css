@@ -1,7 +1,7 @@
 /* General Reset */
 * {margin:0; padding:0; box-sizing:border-box;}
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background:#0b0b0b;
   color:#fff;
   line-height:1.6;
@@ -45,7 +45,7 @@ body {
   color:#00ff99;
 }
 
-/* Container */
+/* Container Card */
 .container {
   max-width:520px;
   margin:0 auto;
@@ -64,7 +64,11 @@ body {
 @keyframes slideIn {to {opacity:1; transform: translateX(0);}}
 
 .controls {display:flex; gap:5px;}
-input {flex:1; padding:10px; border-radius:8px; border:none; background:#222; color:#fff;}
+input, textarea {
+  flex:1; padding:10px; border-radius:8px; border:none; background:#222; color:#fff;
+  margin-bottom:10px;
+}
+textarea {resize:none;}
 button {
   padding:10px;
   border:none;
@@ -76,10 +80,10 @@ button {
 button:hover {transform: scale(1.1); box-shadow:0 0 20px #00ff99;}
 
 /* Tasks */
-#tasks li {opacity:0; transform: translateX(-20px); animation: taskSlide 0.4s forwards; margin:5px 0;}
+#tasks-list li {opacity:0; transform: translateX(-20px); animation: taskSlide 0.4s forwards; margin:5px 0;}
 @keyframes taskSlide {to {opacity:1; transform: translateX(0);}}
 
-/* Games Canvas */
+/* Canvas */
 canvas {background:#000; margin-top:10px; border-radius:10px; border:1px solid #333; animation: fadeIn 0.5s;}
 @keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
 
