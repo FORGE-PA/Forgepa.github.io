@@ -2,62 +2,40 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FORGE PA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE PA - Personal Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <div class="logo">FORGE PA</div>
   <nav>
-    <a href="#chat-section">Assistant</a>
-    <a href="#tasks-section">Tasks</a>
-    <a href="#games-section">Games</a>
+    <a href="index.html">Home</a>
+    <a href="tasks.html">Tasks</a>
+    <a href="games.html">Games</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
   </nav>
 </header>
 
-<!-- Main Content -->
 <main>
-  <!-- Chat Section -->
-  <section id="chat-section" class="section">
+  <section class="section" id="assistant">
     <h2>Personal Assistant</h2>
     <div class="container">
       <div id="chat"></div>
       <div class="controls">
-        <input id="input" placeholder="Command or question">
+        <input id="input" placeholder="Ask something or give a command">
         <button onclick="send()">Send</button>
         <button onclick="voice()">🎤</button>
         <button onclick="speak()">🔊</button>
       </div>
     </div>
   </section>
-
-  <!-- Tasks Section -->
-  <section id="tasks-section" class="section">
-    <h2>Tasks & Planning</h2>
-    <div class="container">
-      <ul id="tasks"></ul>
-    </div>
-  </section>
-
-  <!-- Games Section -->
-  <section id="games-section" class="section">
-    <h2>Kill Time</h2>
-    <div class="container">
-      <div class="games">
-        <button onclick="startGame('snake')">Snake</button>
-        <button onclick="startGame('reaction')">Reaction</button>
-        <button onclick="startGame('shooter')">Mini Shooter</button>
-      </div>
-      <canvas id="canvas" width="320" height="320"></canvas>
-    </div>
-  </section>
 </main>
 
-<!-- Footer -->
 <footer>
   © 2026 Eniayekan Promise. All rights reserved.
 </footer>
