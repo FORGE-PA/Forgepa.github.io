@@ -1,51 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FORGE PA - Personal Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forge PA</title>
+
+  <!-- Strong, mature font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark: #0d0f12;
+      --mid: #1a1d22;
+      --light: #cfd3d6;
+      --ember: #ff7a18;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.9)),
+        url("https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/94b8a6aaad0fe142d54940387a077d38a060fba1/steel-furnace.jpg")
+        center / cover no-repeat;
+      z-index: -2;
+    }
+
+    /* ===== NAV BAR ===== */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(10,10,10,0.65);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo {
+      font-size: 26px;
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 10px 18px;
+      text-decoration: none;
+      color: #e5e5e5;
+      text-transform: uppercase;
+      font-size: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .nav-links a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        url("https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/94b8a6aaad0fe142d54940387a077d38a060fba1/steel-nav.jpg")
+        center / cover no-repeat;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-links a:active::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, var(--ember) 0%, transparent 70%);
+      animation: spark 0.25s ease-out;
+    }
+
+    @keyframes spark {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      padding: 60px;
+    }
+
+    .hero-box {
+      max-width: 620px;
+      background: rgba(15,17,19,0.78);
+      padding: 42px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-box h1 {
+      font-size: 46px;
+      letter-spacing: 3px;
+      margin-bottom: 18px;
+    }
+
+    .hero-box p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #c9c9c9;
+      margin-bottom: 28px;
+    }
+
+    .hero-box button {
+      padding: 14px 30px;
+      font-size: 14px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #444, #222);
+      color: #ffffff;
+      border-radius: 6px;
+    }
+
+    .hero-box button:hover {
+      background: linear-gradient(135deg, #555, #333);
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Splash Screen -->
-<div id="splash">
-  <div id="splash-logo">FORGE PA</div>
-  <div id="splash-loader"></div>
-</div>
-
-<header class="header">
-  <div class="logo">FORGE PA</div>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="tasks.html">Tasks</a>
-    <a href="games.html">Games</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <div class="logo">FORGE PA</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Assistant</a>
+      <a href="#">Tasks</a>
+      <a href="#">Games</a>
+      <a href="#">Upgrade</a>
+    </div>
   </nav>
-</header>
 
-<main>
-  <section class="section" id="assistant">
-    <h2>Personal Assistant</h2>
-    <div class="container">
-      <div id="chat"></div>
-      <div class="controls">
-        <input id="input" placeholder="Ask something or give a command">
-        <button onclick="send()">Send</button>
-        <button onclick="voice()">🎤</button>
-        <button onclick="speak()">🔊</button>
-      </div>
+  <section class="hero">
+    <div class="hero-box">
+      <h1>DISCIPLINE. CONTROL. EXECUTION.</h1>
+      <p>
+        Forge PA is a personal assistant forged for focus and structure.
+        Built to plan, execute, and eliminate wasted time.
+      </p>
+      <button>Activate Assistant</button>
     </div>
   </section>
-</main>
 
-<footer>
-  © 2026 Eniayekan Promise. All rights reserved.
-</footer>
+  <footer>
+    © 2026 Eniayekan Promise
+  </footer>
 
-<script src="script.js"></script>
 </body>
 </html>
