@@ -9,14 +9,13 @@
 :root{
   --nav-bg:#0b1220;
   --accent:#f59e0b;
-  --panel-bg:rgba(15,23,42,.75);
+  --panel-bg:rgba(15,23,42,.85);
   --text:#e5e7eb;
   --forge-color:#f59e0b;
-  --ember-color:#f59e0b;
 }
 
+/* GENERAL */
 *{box-sizing:border-box;font-family:Inter,system-ui,sans-serif;margin:0;padding:0}
-
 body{
   min-height:100vh;
   color:var(--text);
@@ -26,17 +25,7 @@ body{
   transition:background 0.5s ease;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(10px);
-  z-index:-1;
-  transition:background 0.5s ease;
-}
-
-/* 🔥 EMBERS */
+/* EMBERS */
 .forge-embers{
   position:fixed;
   inset:0;
@@ -56,55 +45,75 @@ body::before{
   to{transform:translateY(-120vh) scale(.2);opacity:0}
 }
 
-/* NAV & TOP PANELS */
+/* NAVBAR */
 nav{
   display:flex;
-  flex-direction:column;
+  justify-content:space-between;
   align-items:center;
+  padding:12px 40px;
   background:var(--nav-bg);
-  border-bottom:1px solid rgba(255,255,255,.05);
-  padding:10px;
-  z-index:2;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-radius:0 0 20px 20px;
 }
+
 nav h1{
+  font-size:28px;
+  letter-spacing:2px;
+  font-weight:700;
   color:var(--forge-color);
-  font-size:24px;
-  letter-spacing:3px;
-  transition:color 0.5s ease, transform 0.5s ease;
+  cursor:pointer;
+  transition:all 0.5s ease;
+  animation:forgeIdle 3s ease-in-out infinite alternate;
 }
 
-.top-panel{
+@keyframes forgeIdle{
+  0%{transform:scale(1) rotate(0deg); text-shadow:0 0 10px var(--forge-color);}
+  50%{transform:scale(1.05) rotate(2deg); text-shadow:0 0 20px var(--forge-color);}
+  100%{transform:scale(1) rotate(-2deg); text-shadow:0 0 10px var(--forge-color);}
+}
+
+nav .top-panel{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin-top:10px;
+  gap:20px;
 }
-
-.top-panel button{
-  padding:8px 14px;
-  background:none;
-  border:1px solid rgba(255,255,255,.1);
+nav .top-panel button{
+  padding:8px 18px;
+  border-radius:8px;
+  border:none;
+  background:rgba(255,255,255,0.05);
   color:var(--text);
+  font-weight:500;
+  transition:all 0.3s;
   cursor:pointer;
 }
-.top-panel button:hover{border-color:var(--accent)}
+nav .top-panel button:hover{
+  background:var(--accent);
+  color:#000;
+  transform:translateY(-2px);
+}
 
+/* CONTAINER */
 .container{
-  padding:20px;
+  padding:30px;
+  max-width:1000px;
+  margin:auto;
 }
 
 /* PANELS */
 .panel{
   display:none;
-  max-width:900px;
-  margin:auto;
   background:var(--panel-bg);
-  border-radius:14px;
-  padding:24px;
-  margin-top:20px;
+  border-radius:16px;
+  padding:30px;
+  margin-top:30px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  transition:all 0.3s ease;
 }
 .panel.active{display:block}
+
 h2{color:var(--accent)}
 
 input,select,button{
@@ -113,6 +122,7 @@ input,select,button{
   background:#020617;
   color:var(--text);
   border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;
 }
 
 .bg-grid{
@@ -128,13 +138,14 @@ input,select,button{
   border-radius:6px;
   cursor:pointer;
   border:2px solid transparent;
+  transition:all 0.3s;
 }
 .bg-grid img:hover{border-color:var(--accent)}
 </style>
 </head>
 <body>
 
-<!-- 🔥 EMBERS -->
+<!-- EMBERS -->
 <div class="forge-embers" id="embers"></div>
 
 <nav>
@@ -189,29 +200,29 @@ input,select,button{
 </div>
 
 <script>
-// 📌 RAW URLs + Effects
+// DOM references
+const forgeName = document.getElementById("forgeName");
+const embersContainer = document.getElementById("embers");
+const localMusic = document.getElementById("localMusic");
+const localPlayer = document.getElementById("localPlayer");
+const navColor = document.getElementById("navColor");
+const accentColor = document.getElementById("accentColor");
+const forgeColor = document.getElementById("forgeColor");
+const alarmTime = document.getElementById("alarmTime");
+const alarmSound = document.getElementById("alarmSound");
+const alarmAudio = document.getElementById("alarmAudio");
+
+// Backgrounds + complementary ember colors + forge effects
 const backgrounds = [
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/pexels-photo.jpg", ember:"#f59e0b", forge:"#f59e0b"},
+  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/pexels-photo.jpg", ember:"#0bf5f5", forge:"#f59e0b"},
   {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/155abc778f729b6991754795fa2bd977.png", ember:"#ff4500", forge:"#ff4500"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/1cbfec64d9a80b1933ae3d166c85c65f.png", ember:"#00ffff", forge:"#00ffff"},
+  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/1cbfec64d9a80b1933ae3d166c85c65f.png", ember:"#00ff88", forge:"#00ffff"},
   {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/2e05adb4206f981466580254b616f639.png", ember:"#ff69b4", forge:"#ff69b4"},
   {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/52649ecaf9bfa6ee8e91800c9cbd9bf6.png", ember:"#00ff00", forge:"#00ff00"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/7b039e2d98568ed9420183f112de480d.jpg", ember:"#ff8c00", forge:"#ff8c00"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/6c432a34046965309c32e7377dca8a74.png", ember:"#ff00ff", forge:"#ff00ff"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/8b4513cb9f4987307212ad15c4eceb49.png", ember:"#00ffff", forge:"#00ffff"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/985f1e7002a3992820f0a5e71b2b329c.png", ember:"#ff4500", forge:"#ff4500"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/b14b1e4c9d50255971b779fd30519b88.png", ember:"#f59e0b", forge:"#f59e0b"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/steel-nav.jpg", ember:"#ffffff", forge:"#ffffff"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/pexels-photo-414171.jpeg", ember:"#f59e0b", forge:"#f59e0b"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/pexels-photo-356004.jpeg", ember:"#ff4500", forge:"#ff4500"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/file_0000000096b0620a8a5f267b403cf0ad.png", ember:"#00ffff", forge:"#00ffff"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/file_0000000070b4620aadfa4122d6c0b9c0.png", ember:"#ff69b4", forge:"#ff69b4"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/fad78bc462b22049f03519d9ba9ec6de.png", ember:"#00ff00", forge:"#00ff00"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/c92beec6743d05636e1fd7be278a87dd.png", ember:"#ff8c00", forge:"#ff8c00"},
-  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/bf3dd05033975b34dbb3cf2d3a387056.png", ember:"#ff00ff", forge:"#ff00ff"}
+  {url:"https://raw.githubusercontent.com/FORGE-PA/Forgepa.github.io/main/7b039e2d98568ed9420183f112de480d.jpg", ember:"#ff8c00", forge:"#ff8c00"}
 ];
 
-// 🌟 Populate background grid
+// Populate background grid
 const bgGrid = document.getElementById("bgGrid");
 backgrounds.forEach(bg=>{
   const img = document.createElement("img");
@@ -220,11 +231,10 @@ backgrounds.forEach(bg=>{
   bgGrid.appendChild(img);
 });
 
-// 🔥 EMBERS
-const embersContainer = document.getElementById("embers");
+// Create Embers
 let emberCount = 40;
 function createEmbers(color){
-  embersContainer.innerHTML = '';
+  embersContainer.innerHTML='';
   for(let i=0;i<emberCount;i++){
     const e=document.createElement("div");
     e.className="ember";
@@ -237,36 +247,36 @@ function createEmbers(color){
   }
 }
 
-// 💻 PANELS
+// Panels
 function showPanel(id){
   document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-// 🌈 SET BG & EFFECTS
-const forgeName = document.getElementById("forgeName");
+// Set background + ember + forge color + animations
 function setBg(bg){
   document.body.style.backgroundImage=`url(${bg.url})`;
   localStorage.setItem("bg",bg.url);
   createEmbers(bg.ember);
   forgeName.style.color = bg.forge;
+  forgeName.style.textShadow = `0 0 20px ${bg.forge},0 0 40px ${bg.ember}`;
 }
 
-// 🎵 MUSIC
+// Music
 function searchMusic(){
   const q=document.getElementById("musicSearch").value.trim();
   if(!q)return;
   document.getElementById("spotifyPlayer").src=
     `https://open.spotify.com/embed/search/${encodeURIComponent(q)}`;
 }
-localMusic.onchange=e=>{
+localMusic.onchange = e => {
   const f=e.target.files[0];
   if(!f)return;
   localPlayer.src=URL.createObjectURL(f);
   localPlayer.play();
 };
 
-// ⏰ ALARM
+// Alarm
 let alarm=null;
 function setAlarm(){alarm=alarmTime.value}
 setInterval(()=>{
@@ -280,7 +290,7 @@ setInterval(()=>{
   }
 },1000);
 
-// 🎨 CUSTOMIZE COLORS
+// Customize colors
 navColor.oninput=e=>{
   document.documentElement.style.setProperty("--nav-bg",e.target.value);
   localStorage.setItem("nav",e.target.value);
@@ -294,7 +304,7 @@ forgeColor.oninput=e=>{
   localStorage.setItem("forge",e.target.value);
 };
 
-// 🟢 Load saved colors & background
+// Load saved colors & background
 if(localStorage.getItem("nav"))
   document.documentElement.style.setProperty("--nav-bg",localStorage.getItem("nav"));
 if(localStorage.getItem("accent"))
