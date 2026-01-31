@@ -1,224 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boss Elite Edition 2.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  * {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
-  body {background:#111; color:#fff; transition: background 0.3s, color 0.3s;}
-  header {background:#000; text-align:center; padding:20px; border-bottom:3px solid #00bfff;}
-  header h1 {color:#00bfff; font-size:2rem; margin-bottom:5px;}
-  nav {display:flex; justify-content:center; flex-wrap:wrap; gap:15px; margin:15px 0;}
-  nav button {padding:8px 15px; border:none; border-radius:5px; cursor:pointer; background:#00bfff; color:#000; font-weight:600;}
-  nav button:hover {background:#0099cc; color:#fff;}
-  section {max-width:1000px; margin:20px auto; padding:20px; background:#1a1a1a; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.5);}
-  h2 {color:#00bfff; margin-bottom:15px;}
-  .cards {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
-  .card {background:#222; padding:20px; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.3); transition: transform 0.3s;}
-  .card:hover {transform: translateY(-5px);}
-  .card h3 {color:#00bfff; margin-bottom:10px;}
-  input, button, textarea, select {padding:8px; margin:5px 0; border-radius:5px; border:none; width:100%;}
-  button {background:#00bfff; color:#000; font-weight:600; cursor:pointer;}
-  button:hover {background:#0099cc; color:#fff;}
-  .theme-dark {background:#111; color:#fff;}
-  .theme-light {background:#f2f2f2; color:#111;}
-  .theme-blue {background:#001f3f; color:#a0d2ff;}
-  .theme-cyber {background:#0f0f0f; color:#0ff;}
-  .theme-luxury {background:#1a1a1a; color:#ffd700;}
-  canvas {background:#333; border-radius:10px; display:block; margin:10px 0;}
-</style>
-</head>
-<body class="theme-dark">
+  <meta charset="UTF-8">
+  <title>FORGE PA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<header>
-  <h1>Boss Elite Edition 2.0</h1>
-  <p>Fully functional professional prototype</p>
-</header>
+  <style>
+    :root {
+      --nav-bg: #0b1220;
+      --accent: #f59e0b;
+      --panel-bg: rgba(15, 23, 42, 0.75);
+      --text: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+
+    nav {
+      height: 64px;
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    nav h1 {
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .container {
+      display: flex;
+      height: calc(100vh - 64px);
+    }
+
+    aside {
+      width: 220px;
+      background: rgba(0,0,0,0.4);
+      padding: 16px;
+    }
+
+    aside button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    aside button:hover {
+      border-color: var(--accent);
+    }
+
+    main {
+      flex: 1;
+      padding: 32px;
+    }
+
+    .panel {
+      background: var(--panel-bg);
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 900px;
+      margin: auto;
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin-top: 10px;
+      background: #020617;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .bg-grid img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 2px solid transparent;
+    }
+
+    .bg-grid img:hover {
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
 
 <nav>
-  <button onclick="showSection('productivity')">Productivity</button>
-  <button onclick="showSection('games')">Games</button>
-  <button onclick="showSection('translator')">Translator</button>
-  <select onchange="changeTheme(this.value)">
-    <option value="theme-dark">Dark</option>
-    <option value="theme-light">Light</option>
-    <option value="theme-blue">Blue</option>
-    <option value="theme-cyber">Cyber</option>
-    <option value="theme-luxury">Luxury</option>
-  </select>
-  <select onchange="changeMusic(this.value)">
-    <option value="">Select Music</option>
-    <option value="https://www.bensound.com/bensound-music/bensound-summer.mp3">Summer</option>
-    <option value="https://www.bensound.com/bensound-music/bensound-clearday.mp3">Clear Day</option>
-    <option value="https://www.bensound.com/bensound-music/bensound-energy.mp3">Energy</option>
-  </select>
-  <button onclick="toggleMusic()">Play/Pause Music</button>
+  <h1>FORGE</h1>
+  <div>
+    Nav <input type="color" id="navColor">
+    Accent <input type="color" id="accentColor">
+  </div>
 </nav>
 
-<!-- Productivity -->
-<section id="productivity">
-  <h2>Productivity & Scheduling</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Add Task</h3>
-      <input type="text" id="bossTask" placeholder="Enter Task">
-      <button onclick="addTask()">Add Task</button>
-      <ul id="taskList"></ul>
-    </div>
-    <div class="card">
-      <h3>Schedule Call</h3>
-      <input type="text" id="callName" placeholder="Enter Name">
-      <input type="time" id="callTime">
-      <button onclick="scheduleCall()">Schedule Call</button>
-      <ul id="callList"></ul>
-    </div>
-    <div class="card">
-      <h3>Set Alarm</h3>
+<div class="container">
+
+  <aside>
+    <button onclick="showPanel('assistant')">Assistant</button>
+    <button onclick="showPanel('music')">Music</button>
+    <button onclick="showPanel('alarm')">Alarm</button>
+    <button onclick="showPanel('background')">Background</button>
+    <button onclick="showPanel('settings')">Settings</button>
+  </aside>
+
+  <main>
+
+    <section id="assistant" class="panel active">
+      <h2>FORGE Assistant</h2>
+      <p>Forge exists to improve you — not babysit you.</p>
+    </section>
+
+    <section id="music" class="panel">
+      <h2>Music</h2>
+
+      <!-- Spotify Embed -->
+      <iframe
+        src="https://open.spotify.com/embed/track/4r7x7Xl2R1lE7t6HqHkR5T"
+        width="100%"
+        height="152"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        loading="lazy"></iframe>
+
+      <h3>Local Music</h3>
+      <input type="file" accept="audio/*" id="localMusic">
+      <audio id="localPlayer" controls></audio>
+    </section>
+
+    <section id="alarm" class="panel">
+      <h2>Alarm</h2>
       <input type="time" id="alarmTime">
+      <select id="alarmSound">
+        <option value="alarm1.mp3">Forge Pulse</option>
+        <option value="alarm2.mp3">Classic</option>
+      </select>
       <button onclick="setAlarm()">Set Alarm</button>
-      <p id="alarmCountdown"></p>
-      <audio id="alarmSound" src="https://www.soundjay.com/button/sounds/beep-07.mp3"></audio>
-    </div>
-  </div>
-</section>
+      <audio id="alarmAudio"></audio>
+    </section>
 
-<!-- Games -->
-<section id="games" style="display:none;">
-  <h2>Mini Games</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Endless Runner</h3>
-      <canvas id="runner" width="300" height="150"></canvas>
-      <button onclick="startRunner()">Start Runner</button>
-    </div>
-    <div class="card">
-      <h3>Mini Shooter</h3>
-      <canvas id="shooter" width="300" height="150"></canvas>
-      <button onclick="startShooter()">Start Shooter</button>
-    </div>
-  </div>
-</section>
+    <section id="background" class="panel">
+      <h2>Backgrounds</h2>
 
-<!-- Translator -->
-<section id="translator" style="display:none;">
-  <h2>Translator (Text → Speech)</h2>
-  <textarea id="translateText" placeholder="Type text here..."></textarea>
-  <button onclick="speakText()">Speak</button>
-</section>
+      <div class="bg-grid">
+        <!-- REPLACE WITH YOUR RAW IMAGE URLS -->
+        <img src="https://raw.githubusercontent.com/USERNAME/REPO/main/bg1.jpg" onclick="setBg(this.src)">
+        <img src="https://raw.githubusercontent.com/USERNAME/REPO/main/bg2.jpg" onclick="setBg(this.src)">
+        <img src="https://raw.githubusercontent.com/USERNAME/REPO/main/bg3.jpg" onclick="setBg(this.src)">
+      </div>
+    </section>
 
-<audio id="bgMusic" loop></audio>
+    <section id="settings" class="panel">
+      <h2>Settings</h2>
+      All preferences auto-save.
+    </section>
+
+  </main>
+</div>
 
 <script>
-let currentSection = 'productivity';
-function showSection(id){
-  document.getElementById('productivity').style.display = 'none';
-  document.getElementById('games').style.display = 'none';
-  document.getElementById('translator').style.display = 'none';
-  document.getElementById(id).style.display = 'block';
-  currentSection = id;
-}
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
 
-// Themes
-function changeTheme(theme){
-  document.body.className = theme;
-}
+  // Background
+  function setBg(url) {
+    document.body.style.backgroundImage = `url(${url})`;
+    localStorage.setItem("bg", url);
+  }
 
-// Music
-let bgMusic = document.getElementById('bgMusic');
-function changeMusic(url){
-  if(!url) return;
-  bgMusic.src = url;
-  bgMusic.play();
-}
-function toggleMusic(){ bgMusic.paused? bgMusic.play(): bgMusic.pause(); }
+  const savedBg = localStorage.getItem("bg");
+  if (savedBg) document.body.style.backgroundImage = `url(${savedBg})`;
 
-// Tasks
-function addTask(){
-  const task = document.getElementById('bossTask').value;
-  if(task){
-    const li = document.createElement('li'); li.textContent = task;
-    document.getElementById('taskList').appendChild(li);
-    document.getElementById('bossTask').value=''; alert('Task added!');
-  } else alert('Enter a task');
-}
+  // Music
+  const localMusic = document.getElementById("localMusic");
+  const localPlayer = document.getElementById("localPlayer");
 
-// Schedule Calls
-function scheduleCall(){
-  const name=document.getElementById('callName').value;
-  const time=document.getElementById('callTime').value;
-  if(name && time){
-    const li=document.createElement('li');
-    li.textContent=name+' at '+time;
-    document.getElementById('callList').appendChild(li);
-    document.getElementById('callName').value=''; document.getElementById('callTime').value='';
-    alert('Call scheduled!');
-  } else alert('Enter name and time');
-}
-
-// Alarm
-let alarmInterval;
-function setAlarm(){
-  const time=document.getElementById('alarmTime').value;
-  if(!time){ alert('Select a time'); return; }
-  if(alarmInterval) clearInterval(alarmInterval);
-  const now=new Date();
-  const [h,m]=time.split(':'); 
-  const alarmTime=new Date(); alarmTime.setHours(h, m,0,0);
-  if(alarmTime<now) alarmTime.setDate(alarmTime.getDate()+1);
-  alarmInterval=setInterval(()=>{
-    const diff=alarmTime-new Date();
-    if(diff<=0){
-      clearInterval(alarmInterval);
-      document.getElementById('alarmCountdown').textContent='ALARM!';
-      document.getElementById('alarmSound').play();
-      return;
-    }
-    const min=Math.floor(diff/60000); const sec=Math.floor((diff%60000)/1000);
-    document.getElementById('alarmCountdown').textContent=`${min} min ${sec} sec`;
-  },1000);
-}
-
-// Translator
-function speakText(){
-  const text=document.getElementById('translateText').value;
-  if(text){ const utter=new SpeechSynthesisUtterance(text); speechSynthesis.speak(utter);}
-  else alert('Type text first');
-}
-
-/* Simple Endless Runner */
-let runnerInterval;
-function startRunner(){
-  const canvas=document.getElementById('runner'); const ctx=canvas.getContext('2d');
-  let x=10, y=130, speed=2;
-  if(runnerInterval) clearInterval(runnerInterval);
-  runnerInterval=setInterval(()=>{
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle='lime';
-    ctx.fillRect(x,y-20,20,20);
-    x+=speed; if(x>canvas.width) x=0;
-  },30);
-}
-
-/* Simple Shooter */
-let shooterInterval;
-function startShooter(){
-  const canvas=document.getElementById('shooter'); const ctx=canvas.getContext('2d');
-  let bullets=[], enemies=[];
-  for(let i=0;i<5;i++){ enemies.push({x:Math.random()*280,y:Math.random()*50}); }
-  if(shooterInterval) clearInterval(shooterInterval);
-  shooterInterval=setInterval(()=>{
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle='red'; enemies.forEach(e=>{ctx.fillRect(e.x,e.y,20,20); e.y+=1; if(e.y>canvas.height) e.y=0;});
-    ctx.fillStyle='yellow'; bullets.forEach(b=>{ctx.fillRect(b.x,b.y,5,10); b.y-=5;});
-    bullets=bullets.filter(b=>b.y>0);
-  },30);
-  canvas.onclick=function(e){
-    const rect=canvas.getBoundingClientRect();
-    bullets.push({x:e.clientX-rect.left-2.5, y:e.clientY-rect.top});
+  localMusic.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    localPlayer.src = URL.createObjectURL(file);
+    localPlayer.play();
   };
-}
+
+  // Alarm
+  let alarm = null;
+  function setAlarm() {
+    alarm = document.getElementById("alarmTime").value;
+  }
+
+  setInterval(() => {
+    if (!alarm) return;
+    const now = new Date();
+    const time = now.toTimeString().slice(0,5);
+    if (time === alarm) {
+      const audio = document.getElementById("alarmAudio");
+      audio.src = document.getElementById("alarmSound").value;
+      audio.play();
+      alert("FORGE: Execute.");
+      alarm = null;
+    }
+  }, 1000);
+
+  // Colors
+  const navColor = document.getElementById("navColor");
+  const accentColor = document.getElementById("accentColor");
+
+  navColor.oninput = e => {
+    document.documentElement.style.setProperty("--nav-bg", e.target.value);
+    localStorage.setItem("navColor", e.target.value);
+  };
+
+  accentColor.oninput = e => {
+    document.documentElement.style.setProperty("--accent", e.target.value);
+    localStorage.setItem("accentColor", e.target.value);
+  };
+
+  const savedNav = localStorage.getItem("navColor");
+  const savedAccent = localStorage.getItem("accentColor");
+  if (savedNav) document.documentElement.style.setProperty("--nav-bg", savedNav);
+  if (savedAccent) document.documentElement.style.setProperty("--accent", savedAccent);
 </script>
+
 </body>
-       </html>
+</html>
